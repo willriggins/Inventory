@@ -4,11 +4,16 @@ package com.theironyard;
  * Created by will on 5/23/16.
  */
 public class InventoryItem {
-    String text;
+    String name;
     int quantity;
+    String category;
 
-    public InventoryItem(String text, int quantity) {
-        this.text = text;
-        this.quantity = quantity;
+    public InventoryItem() { // ask about why this is necessary
     }
+
+//    public InventoryItem(String name, int quantity, String category) {
+//        this.name = name;
+//        this.quantity = quantity;
+//        this.category = category;
+//    }
 }

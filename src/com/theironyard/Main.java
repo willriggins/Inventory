@@ -5,30 +5,43 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void createItem(Scanner scanner, ArrayList<InventoryItem> items) {
-        System.out.println("Enter new item name to add to the list.");
-        String text = scanner.nextLine();
-        int quantity = 0;
-        InventoryItem item = new InventoryItem(text, quantity);
-        items.add(item);
-        System.out.println(text + " added to inventory.");
+    static InventoryItem createItem(String name, int quantity, String category) {
+
+        category = category.toLowerCase();
+        switch (category) {
+            case "hat":
+                return new Hat(name, quantity);
+
+            case "glove":
+                return new Glove(name, quantity);
+
+            case "jacket":
+                return new Jacket(name, quantity);
+
+            case "belt":
+                return new Belt(name, quantity);
+
+            case "boot":
+                return new Boot(name, quantity);
+
+            default:
+                System.out.println("Invalid category");
+        }
+        return new InventoryItem();
     }
 
     public static void removeItem(Scanner scanner, ArrayList<InventoryItem> items) {
         System.out.println("Enter item number you wish to remove from the list.");
-        String intStr = scanner.nextLine();
-        int num = Integer.valueOf(intStr);
+        int num = Integer.valueOf(scanner.nextLine());
         items.remove(num - 1);
     }
 
     public static void updateItem(Scanner scanner, ArrayList<InventoryItem> items) {
         System.out.println("Which item number do you wish to modify?");
-        String updateNum = scanner.nextLine();
-        int newNum = Integer.valueOf(updateNum);
-        System.out.println("Update with new quantity:");
-        String itemNum = scanner.nextLine();
+        int newNum = Integer.valueOf(scanner.nextLine());
+        System.out.println("Enter new quantity:");
         InventoryItem tempItem = items.get(newNum -1);
-        tempItem.quantity += Integer.valueOf(itemNum);
+        tempItem.quantity = Integer.valueOf(scanner.nextLine());
 
     }
 
@@ -40,7 +53,7 @@ public class Main {
 
             int i = 1;
             for (InventoryItem inventoryItem : items) {
-                System.out.println(i + ". " + inventoryItem.text + " [" + inventoryItem.quantity + "]");
+                System.out.printf("%s. [%s] %s, (%s)\n", i, inventoryItem.quantity, inventoryItem.name, inventoryItem.category);
                 i++;
             }
             System.out.println("Options:");
@@ -50,10 +63,16 @@ public class Main {
 
             String option = scanner.nextLine();
 
-
             switch (option) {
                 case "1":
-                    createItem(scanner, items);
+                    System.out.println("What item do you want to create?");
+                    String name = scanner.nextLine();
+                    System.out.println("How many do you have?");
+                    int quantity = Integer.valueOf(scanner.nextLine());
+                    System.out.println("What category does it fit into?");
+                    String category = scanner.nextLine();
+                    InventoryItem inventoryItem = createItem(name, quantity, category);
+                    items.add(inventoryItem);
                     break;
 
                 case "2":
@@ -66,6 +85,7 @@ public class Main {
 
                 default:
                     System.out.println("Invalid Option");
+
             }
         }
     }
